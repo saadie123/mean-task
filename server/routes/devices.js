@@ -71,24 +71,6 @@ router.post(
   }
 );
 
-router.get("/:id/image", checkId, async (req, res) => {
-  try {
-    const id = req.params.id;
-    let device = await Item.findById(id);
-    if (!device) {
-      return res.status(404).json("Device not found");
-    }
-    if (device.image) {
-      console.log(device.image);
-      return res.sendFile(device.image.filePath);
-    } else {
-      res.status(404).send({ error: "Item image not found" });
-    }
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
 router.put(
   "/:id",
   passport.authenticate("jwt", { session: false }),
