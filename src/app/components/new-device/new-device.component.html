@@ -1,0 +1,69 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="50">
+    <mat-card>
+      <mat-card-header>
+        <h1 class="text-center">New Device</h1>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="text-center color-red" *ngIf="error">{{ error }}</p>
+        <div fxLayout="row">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Name" [(ngModel)]="name" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Cost" [(ngModel)]="cost" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Warranty" [(ngModel)]="warranty" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field class="full-width-input">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Expiry"
+              [formControl]="expiry"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field class="full-width-input">
+            <ngx-mat-file-input
+              accept="image/*"
+              [formControl]="image"
+              placeholder="Image"
+            ></ngx-mat-file-input>
+            <mat-icon matSuffix>folder</mat-icon>
+          </mat-form-field>
+        </div>
+        <button
+          mat-button
+          mat-raised-button
+          [disabled]="loading"
+          color="primary"
+          (click)="saveDevice()"
+        >
+          <span>
+            <mat-spinner
+              *ngIf="loading"
+              color="primary"
+              [diameter]="37"
+            ></mat-spinner>
+            <span *ngIf="!loading">Save</span>
+          </span>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

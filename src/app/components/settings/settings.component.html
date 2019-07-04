@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="50">
+    <mat-card>
+      <mat-card-header> </mat-card-header>
+
+      <mat-card-content>
+        <p class="text-center color-red" *ngIf="error">{{ error }}</p>
+        <div fxLayout="row">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Setting 1" [(ngModel)]="setting1" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Setting 2" [(ngModel)]="setting2" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Setting 3" [(ngModel)]="setting3" />
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-button
+          mat-raised-button
+          [disabled]="loading"
+          color="primary"
+        >
+          <span>
+            <mat-spinner
+              *ngIf="loading"
+              color="primary"
+              [diameter]="37"
+            ></mat-spinner>
+            <span *ngIf="!loading">Save</span>
+          </span>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

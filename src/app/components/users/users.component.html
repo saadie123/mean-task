@@ -1,0 +1,51 @@
+<div fxLayout="row" style="margin-bottom:20px">
+  <button mat-button mat-raised-button color="primary" routerLink="/users/new">
+    New User
+  </button>
+</div>
+<div fxLayout="row">
+  <table mat-table [dataSource]="users" class="mat-elevation-z8">
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef>First Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.firstname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef>Last Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.lastname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <select matNativeControl (change)="onOptionChange($event, element)">
+            <option
+              value="available"
+              [selected]="element.available ? true : false"
+              >Available</option
+            >
+            <option
+              value="taken"
+              *ngIf="!element.available"
+              [selected]="!element.available ? true : false"
+              >Taken</option
+            >
+          </select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="onPressDelete(element._id)"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

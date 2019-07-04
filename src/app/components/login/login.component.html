@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="50">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <h1 class="text-center">Login</h1>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="text-center color-red" *ngIf="error">{{ error }}</p>
+        <div fxLayout="row" fxFillFill>
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Username" [(ngModel)]="username" />
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxFillFill>
+          <mat-form-field class="full-width-input">
+            <input
+              matInput
+              placeholder="Password"
+              type="password"
+              [(ngModel)]="password"
+            />
+          </mat-form-field>
+        </div>
+        <button
+          mat-button
+          mat-raised-button
+          [disabled]="loading"
+          color="primary"
+          (click)="onLogin()"
+        >
+          <span>
+            <mat-spinner
+              *ngIf="loading"
+              color="primary"
+              [diameter]="37"
+            ></mat-spinner>
+            <span *ngIf="!loading">Login</span>
+          </span>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.devices {
+  flex-wrap: wrap;
+  .device {
+    margin-bottom: 20px;
+    .expiry {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .warranty {
+      font-size: 12px;
+    }
+  }
+}

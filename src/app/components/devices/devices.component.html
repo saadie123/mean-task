@@ -1,0 +1,99 @@
+<div fxLayout="row" style="margin-bottom:20px">
+  <button
+    mat-button
+    mat-raised-button
+    color="primary"
+    routerLink="/devices/new"
+  >
+    New Device
+  </button>
+</div>
+<div
+  class="devices"
+  fxLayout="row"
+  fxLayoutGap="20px"
+  fxLayout.xs="column"
+  fxFlexWrap
+>
+  <div *ngFor="let device of devices" fxFlex="30" class="device">
+    <mat-card class="example-card">
+      <mat-card-header *ngIf="!editableItems.has(device)">
+        <mat-card-title>{{ device.name }}</mat-card-title>
+        <mat-card-subtitle> {{ device.cost | currency }} </mat-card-subtitle>
+      </mat-card-header>
+      <div fxLayout="column" *ngIf="editableItems.has(device)">
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Name" [(ngModel)]="device.name" />
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Cost" [(ngModel)]="device.cost" />
+        </mat-form-field>
+      </div>
+      <img
+        mat-card-image
+        [src]="device.image ? device.image.fileUrl : ''"
+        [alt]="device.name"
+      />
+
+      <mat-card-content *ngIf="!editableItems.has(device)">
+        <div class="expiry">
+          <span>Expiry: {{ device.expiry | date }}</span>
+        </div>
+        <div class="warranty">
+          <span>Warranty: {{ device.warranty }}</span>
+        </div>
+      </mat-card-content>
+      <mat-card-content *ngIf="editableItems.has(device)">
+        <div fxLayout="column">
+          <mat-form-field class="full-width-input">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Expiry"
+              [(ngModel)]="device.expiry"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="full-width-input">
+            <input
+              matInput
+              placeholder="Warranty"
+              [(ngModel)]="device.warranty"
+            />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          *ngIf="!editableItems.has(device)"
+          mat-button
+          mat-raised-button
+          (click)="toggleEditable(device)"
+        >
+          Edit
+        </button>
+        <button
+          *ngIf="editableItems.has(device)"
+          mat-button
+          mat-raised-button
+          color="primary"
+          (click)="onUpdate(device._id, device)"
+        >
+          Save
+        </button>
+        <button
+          mat-button
+          mat-raised-button
+          color="warn"
+          (click)="onPressDelete(device._id)"
+        >
+          Delete
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
