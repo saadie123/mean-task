@@ -18,6 +18,7 @@ const server = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(passport.initialize());
+server.use(express.static(path.resolve(__dirname, "..", "dist", "mean-task")));
 
 passportConfig(passport);
 
