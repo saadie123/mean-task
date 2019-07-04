@@ -29,11 +29,7 @@
           <input matInput placeholder="Cost" [(ngModel)]="device.cost" />
         </mat-form-field>
       </div>
-      <img
-        mat-card-image
-        [src]="device.image ? device.image.fileUrl : ''"
-        [alt]="device.name"
-      />
+      <img mat-card-image [src]="device.image" [alt]="device.name" />
 
       <mat-card-content *ngIf="!editableItems.has(device)">
         <div class="expiry">

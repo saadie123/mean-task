@@ -21,6 +21,7 @@ import { JwtInterceptor } from "./interceptors/jwt.interceptor";
 import { NewUserComponent } from "./components/new-user/new-user.component";
 import { UsersComponent } from "./components/users/users.component";
 import { SettingsComponent } from "./components/settings/settings.component";
+import { AuthGuard } from "./guards/auth.guard";
 
 @NgModule({
   entryComponents: [CustomDialogComponent],
@@ -53,7 +54,8 @@ import { SettingsComponent } from "./components/settings/settings.component";
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-    }
+    },
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

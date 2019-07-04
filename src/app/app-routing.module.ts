@@ -6,6 +6,7 @@ import { NewDeviceComponent } from "./components/new-device/new-device.component
 import { NewUserComponent } from "./components/new-user/new-user.component";
 import { UsersComponent } from "./components/users/users.component";
 import { SettingsComponent } from "./components/settings/settings.component";
+import { AuthGuard } from "./guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -25,35 +26,40 @@ const routes: Routes = [
     component: DevicesComponent,
     data: {
       title: "Devices"
-    }
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: "devices/new",
     component: NewDeviceComponent,
     data: {
       title: "Devices"
-    }
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: "users",
     component: UsersComponent,
     data: {
       title: "Users"
-    }
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: "users/new",
     component: NewUserComponent,
     data: {
       title: "Users"
-    }
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: "settings",
     component: SettingsComponent,
     data: {
       title: "Settings"
-    }
+    },
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -7,6 +7,7 @@ const Device = require("../models/Device");
 const User = require("../models/User");
 const createUploadsDir = require("../utils/create-uploads-dir");
 const checkId = require("../middlewares/check-id");
+const firebaseStorage = require("../utils/storage");
 
 router.get(
   "/",
@@ -47,12 +48,23 @@ router.post(
       });
       let image = req.file;
       if (image) {
+        let bucket = firebaseStorage.bucket();
         device.image = {};
-        device.image.filePath = image.path;
-        device.image.fileUrl = `/api/devices/${device._id}/image`;
-        await device.save();
+        bucket.upload(image.path, async (err, file, response) => {
+          if (err) {
+            throw new Error(err);
+          }
+          await file.makePublic();
+          device.image = response.mediaLink;
+          fs.unlink(image.path, async err => {
+            if (err) {
+              throw new Error(err);
+            }
+            await device.save();
+            return res.status(201).json(device);
+          });
+        });
       }
-      res.status(201).json(device);
     } catch (error) {
       res.status(400).send(error);
     }
@@ -67,6 +79,7 @@ router.get("/:id/image", checkId, async (req, res) => {
       return res.status(404).json("Device not found");
     }
     if (device.image) {
+      console.log(device.image);
       return res.sendFile(device.image.filePath);
     } else {
       res.status(404).send({ error: "Item image not found" });
@@ -110,14 +123,7 @@ router.delete(
         return res.status(404).json("Device not found");
       }
       await User.findOneAndRemove({ device: device._id });
-      if (device.image !== null || device.image !== undefined) {
-        fs.unlink(device.image.filePath, err => {
-          if (err) {
-            throw new Error(err);
-          }
-          return res.status(200).send({ message: "device deleted" });
-        });
-      }
+      return res.status(200).send({ message: "device deleted" });
     } catch (error) {
       res.status(400).send(error);
     }

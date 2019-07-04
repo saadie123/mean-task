@@ -17,10 +17,7 @@ const deviceSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  image: {
-    filePath: String,
-    fileUrl: String
-  }
+  image: String
 });
 
 module.exports = mongoose.model("devices", deviceSchema);
